@@ -117,16 +117,16 @@ bash
 Copy
 Edit
 Assignment-2/
-├── app.py               # Main Streamlit app
-├── requirements.txt      # Python package dependencies
-├── .env                  # Environment variables (API keys)
+├── app.py # Main Streamlit app
+├── requirements.txt # Python package dependencies
+├── .env # Environment variables (API keys)
 └── src/
-    └── llm_agent_project/
-        ├── utils/
-        │   └── utils.py  # Utility functions for LLM Agent and tool integration
-        ├── exception.py  # Custom exception handling
-        ├── logger.py     # Logging configuration
-        └── ...
+└── llm_agent_project/
+├── utils/ # Folder containing utility functions
+│ └── utils.py # Utility functions for LLM Agent and tool integration
+├── exception.py # Custom exception handling
+├── logger.py # Logging configuration
+└── ... # Other possible files or directories
 Environment Variables
 Create a .env file in the root directory with the following content:
 

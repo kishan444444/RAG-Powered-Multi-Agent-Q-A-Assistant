@@ -1,130 +1,138 @@
-🧠 Assignment-2: LLM-Powered PDF Question Answering App
-This project is a Streamlit-based web application that leverages LangChain, FAISS, and Groq LLMs to allow users to:
+# 🧠 RAG-Powered Multi-Agent Q\&A Assistant
 
-Upload PDF documents
+A Streamlit-based web application that leverages LangChain, FAISS, and Groq LLMs to enable users to:
 
-Ask questions based on the content
+* Upload PDF documents.
+* Ask questions based on the content.
+* Receive answers extracted from the document or external tools (e.g., calculator, dictionary, or DuckDuckGo search).
+* View which tools were used, retrieved context, and the final answer.
 
-Receive answers extracted from the document or external tools (e.g., calculator, dictionary, or DuckDuckGo search)
+---
 
-View which tools were used, retrieved context, and the final answer
+## 🏗️ Architecture Overview
 
-🚀 Features
-📄 PDF Upload: Upload and read text from PDF documents.
+* **Frontend**: Built with Streamlit for an interactive user interface.
+* **Backend**:
 
-💬 Question Answering: Ask natural language questions based on the document content.
+  * **PDF Processing**: Utilizes `PyMuPDF` to extract text from uploaded PDFs.
+  * **Text Splitting**: Employs `CharacterTextSplitter` to divide text into manageable chunks.
+  * **Embeddings**: Uses `SentenceTransformer` for generating embeddings.
+  * **Vector Store**: Implements FAISS for efficient similarity search.
+  * **RetrievalQA Chain**: Constructs a `RetrievalQA` chain using LangChain for document-based question answering.
+  * **Tools**:
 
-🛠️ Tool Integration:
+    * **Calculator**: Evaluates mathematical expressions using `simpleeval`.
+    * **Dictionary**: Provides word definitions via `PyDictionary`.
+    * **DuckDuckGo Search**: Fetches real-time information from the web.
+  * **Agent**: Initializes a LangChain `ZERO_SHOT_REACT_DESCRIPTION` agent that selects the appropriate tool based on the user's query.
 
-Calculator: Perform basic math operations.
+---
 
-Dictionary: Look up word definitions.
+## 🔑 Key Design Choices
 
-DocumentQA: Query the uploaded document.
+* **Modular Design**: Encapsulates core functionalities within a `Utils` class for maintainability and scalability.
+* **Tool Integration**: Leverages LangChain's `Tool` abstraction to seamlessly integrate various utilities.
+* **Contextual Awareness**: Combines document content with external information sources to provide comprehensive answers.
+* **Error Handling**: Implements custom exception handling and logging for robust error tracking.
 
-DuckDuckGo Search: Search the web for additional information.
+---
 
-📚 Retrieval-Augmented Generation (RAG) using FAISS.
+## 🚀 Getting Started
 
-🤖 LangChain Agent orchestration.
+### Prerequisites
 
-🔎 Transparency: Displays which tools were used, the context retrieved, and the final answer.
+* Python 3.8 or higher
+* [Groq API Key](https://groq.com/)
 
-🛠️ Installation
-1. Set up the Virtual Environment (recommended):
-bash
-Copy
-Edit
-# Create a virtual environment
-python -m venv venv
+### Installation
 
-# Activate the virtual environment
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-2. Install the Dependencies:
-bash
-Copy
-Edit
-pip install -r requirements.txt
-3. Set up Environment Variables:
-Create a .env file in the root of the project directory and add the following variables:
+1. **Clone the repository**:
 
-ini
-Copy
-Edit
-GROQ_API_KEY=your_groq_api_key
-Replace your_groq_api_key with your actual Groq API key.
+   ```bash
+   git clone https://github.com/kishan444444/RAG-Powered-Multi-Agent-Q-A-Assistant.git
+   cd RAG-Powered-Multi-Agent-Q-A-Assistant
+   ```
 
-🧪 Usage
-Once the application is set up, you can run it using Streamlit to interact with the web interface.
+2. **Create a virtual environment** (optional but recommended):
 
-1. Run the Streamlit App:
-bash
-Copy
-Edit
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install the required packages**:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Set up environment variables**:
+
+   Create a `.env` file in the project root directory and add your Groq API key:
+
+   ```env
+   GROQ_API_KEY=your_groq_api_key_here
+   ```
+
+### Running the Application
+
+```bash
 streamlit run app.py
-2. Interacting with the Web UI:
-Upload a PDF: Use the file uploader widget to upload a PDF document.
+```
 
-Enter a Query: Type a query related to the PDF into the input field.
+---
 
-View Results: The app will display:
+## 🧪 Usage
 
-✅ Tools/agents used for processing the query.
+1. **Upload a PDF**: Use the file uploader in the Streamlit interface to upload your PDF document.
+2. **Ask a Question**: 
 
-📄 Retrieved context snippets from the document (if applicable).
+" 1.Summarize the conclusion of this document."
 
-💡 Final answer to your query.
+" 2.What is 256 * 3?"
 
-Example Query:
-"What are the key points of the document on LLMs?"
+" 3.Define 'neural network'."
 
-Available Tools:
-Calculator: Perform basic calculations.
+" 4.What is the latest news on AI regulation?"
 
-Dictionary: Look up word definitions.
 
-DocumentQA: Query the uploaded document.
 
-DuckDuckGo Search: Conduct web searches.
+3. **View Results**:
 
-📁 File Structure
-bash
-Copy
-Edit
-Assignment-2/
-├── app.py                        # Main Streamlit app
-├── requirements.txt              # Python package dependencies
-├── .env                          # Environment variables (API keys)
-└── src/
-    └── llm_agent_project/
-        ├── utils/
-        │   └── utils.py          # Utility functions for LLM Agent and tool integration
-        ├── exception.py          # Custom exception handling
-        ├── logger.py             # Logging configuration
-        └── ...
-🛠️ Environment Variables
-Create a .env file in the root directory and add the following keys:
+   * **Tools Used**: Displays which tools were utilized to answer your question.
+   * **Retrieved Context**: Shows the context snippets retrieved from the document or external sources.
+   * **Final Answer**: Presents the answer generated by the LLM agent.
 
-ini
-Copy
-Edit
-GROQ_API_KEY=your_groq_api_key
-Replace your_groq_api_key with your actual Groq API key.
+---
 
-🤝 Contributing
-We welcome contributions! If you'd like to improve the project, please follow these steps:
+## 📁 Project Structure
 
-Fork the repository.
+```
+.
+├── app.py
+├── requirements.txt
+├── .env
+├── src/
+│   └── llm_agent_project/
+│       ├── utils/
+│       │   └── utils.py
+│       ├── exception.py
+│       └── logger.py
+└── README.md
+```
 
-Create a new branch (git checkout -b feature-name).
+---
 
-Make your changes.
+## 📄 License
 
-Commit your changes (git commit -am 'Add new feature').
+This project is licensed under the MIT License.
 
-Push to the branch (git push origin feature-name).
+---
 
-Create a new Pull Request.
+## 👤 Author
 
-📜 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+Developed by [Kishan](https://github.com/kishan444444)
+
+For any inquiries or contributions, feel free to reach out or submit a pull request.
+
+

@@ -2,7 +2,7 @@ import streamlit as st
 from src.llm_agent_project.utils.utils import Utils
 import os
 
-# Initialize the Utils class
+#### Initialize the Utils class
 utils = Utils()
 
 def process_pdf_and_query(uploaded_file, query):

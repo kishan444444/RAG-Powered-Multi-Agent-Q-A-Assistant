@@ -22,7 +22,7 @@ load_dotenv()
 class Utils:
     def __init__(self):
         self.qa_chain = None
-        self.llm = ChatGroq(model="Gemma2-9b-It", groq_api_key=os.getenv("GROQ_API_KEY"))
+        self.llm = ChatGroq(model="Gemma2-9b-It", groq_api_key=st.secrets["GROQ_API_KEY"])
         self.tools_used = []
         self.context_snippets = []
 
